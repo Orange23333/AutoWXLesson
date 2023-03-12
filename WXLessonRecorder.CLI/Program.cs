@@ -2,6 +2,11 @@
 using Serilog;
 using Log = Serilog.Log;
 
+#warning 将录制提前到点击回放之前，这样可以录到标题。不要忘记如果失败要停止
+#warning 回放还有多段的，需要增加进入下一段窗口监测！
+
+#warning 之后还要做一个AutoDownloadFile，从学校通知自动下载文件。
+
 namespace WXLessonRecorder.CLI
 {
 	internal class Program
@@ -217,6 +222,8 @@ namespace WXLessonRecorder.CLI
 						if (IsTimePass(timer, Timeout_OpenPlayback_ms))
 						{
 							Log.Error("！寻找回放超时。（也许已经没有回放了）");
+#warning 没有回放了也要记得跳过。
+							afterClassRolling = true;
 							return AutoEventReturn.Fail;
 						}
 						Thread.Sleep(1000);
